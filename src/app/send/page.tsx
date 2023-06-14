@@ -2,7 +2,7 @@
 import 'ui-neumorphism/dist/index.css';
 
 import Ingredient from '@/components/atoms/Ingredient';
-import Header from '@/components/morecules/Header';
+import Header from '@/components/molecules/Header';
 
 export default function Send() {
   // ***** demo
@@ -13,10 +13,10 @@ export default function Send() {
 
   return (
     <>
-      <div className='flex flex-col justify-center items-center p-10'>
+      <div className='flex flex-col  min-h-screen min-w-screen justify-center items-center px-10'>
         <Header title='材料を選んでください' isSend={true} />
-        <div className='flex flex-col justify-center items-center'>
-          <div className='grid grid-cols-6 grid-rows-3 gap-10 min-h-screen min-w-screen'>{ingredients}</div>
+        <div className='w-full h-full flex flex-col justify-center items-center px-10'>
+          <div className='w-full h-full grid grid-cols-6 grid-rows-3 gap-10'>{ingredients}</div>
         </div>
       </div>
     </>
