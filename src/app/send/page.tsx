@@ -30,6 +30,7 @@ export default function Send() {
           <div className='w-full h-full grid grid-cols-6 grid-rows-3 gap-10'>{ingredients}</div>
         </div>
       </div>
+      <InputBox />
     </>
   );
 }

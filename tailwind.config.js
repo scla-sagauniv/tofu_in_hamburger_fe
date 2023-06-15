@@ -14,6 +14,8 @@ module.exports = {
       colors: {
         primary: '#EF9090',
         base: '#CDD4DD',
+        thick: '#5E5E5E',
+        thin: '#E4EBF5',
       },
     },
   },
