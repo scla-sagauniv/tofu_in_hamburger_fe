@@ -4,8 +4,11 @@ import Image from 'next/image';
 import { TypeOfIngredient } from '@/models/TypeOfIngredient';
 import pic from '../../assets/image_png.png';
 import sendIcon from '../../assets/send-icon.svg';
+import { useRouter } from 'next/navigation';
 
 export default function InputBox() {
+  const router = useRouter();
+
   // グローバルに定義されたingredientsから値を取得
   // ***** mock data
   const ingredient: TypeOfIngredient = {
@@ -15,9 +18,8 @@ export default function InputBox() {
       'おいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニク',
   };
 
-  const handleSend = () => {
-    console.log('the ingredients are sent!');
-    return null;
+  const handlePageSwitch = (path: string) => {
+    router.push(path);
   };
 
   return (
@@ -65,7 +67,7 @@ export default function InputBox() {
         </Card>
         <Button
           class='send_button'
-          onClick={handleSend}
+          onClick={() => handlePageSwitch('/confirmation')}
           bgColor='#EF9090'
           style={{ position: 'relative', width: '6%', height: '10%', aspectRatio: '1/1', borderRadius: '25px' }}
         >
