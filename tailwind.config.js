@@ -13,9 +13,11 @@ module.exports = {
       },
       colors: {
         primary: '#EF9090',
+        secondary: '#A492F9',
         base: '#CDD4DD',
         thick: '#5E5E5E',
         thin: '#E4EBF5',
+        layout: '#FEF4EF',
       },
     },
   },
