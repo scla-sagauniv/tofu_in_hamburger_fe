@@ -1,10 +1,16 @@
 import { Button } from 'ui-neumorphism';
 
-export default function GenericButton(props: { label: string; func: () => void }) {
+export default function GenericButton(props: { label: string; func: () => void; colour: string }) {
   return (
     <>
-      <Button rounded onClick={props.func}>
-        {props.label}
+      <Button
+        rounded
+        onClick={props.func}
+        bgColor={props.colour}
+        size='large'
+        style={{ paddingRight: '20px', paddingLeft: '20px', paddingTop: '15px', paddingBottom: '15px' }}
+      >
+        <span className='text-xl'>{props.label}</span>
       </Button>
     </>
   );

@@ -3,12 +3,23 @@ import 'ui-neumorphism/dist/index.css';
 
 import Ingredient from '@/components/atoms/Ingredient';
 import Header from '@/components/molecules/Header';
+import InputBox from '@/components/atoms/InputBox';
+import { TypeOfIngredient } from '@/models/TypeOfIngredient';
+import pic from '../../assets/image_png.png';
+
+// ***** mock data
+const ingredient: TypeOfIngredient = {
+  name: 'チキン',
+  url: pic,
+  description:
+    'おいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニク',
+};
 
 export default function Send() {
   // ***** demo
   const ingredients: Array<JSX.Element> = [];
   for (let index = 0; index < 36; index++) {
-    ingredients.push(<Ingredient />);
+    ingredients.push(<Ingredient ingredient={ingredient} />);
   }
 
   return (
