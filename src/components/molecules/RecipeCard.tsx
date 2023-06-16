@@ -27,7 +27,7 @@ export default function RecipeCard() {
           //   }
         />
         <div style={{ minHeight: '200px', position: 'relative' }}>
-          <Image src='/tomato_nabe.png' layout='fill' objectFit='contain' />
+          <Image src='/tomato_nabe.png' alt='' layout='fill' objectFit='contain' />
         </div>
         <CardContent className='h-1/3 overflow-y-auto'>
           <h2 className='text-thick'>調理時間: 約15分</h2>
