@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Ingredient from '@/components/atoms/Ingredient';
+import AddedIngredientsList from '@/components/atoms/AddedIngredientsList';
 import { useClient } from '@/hooks/Client';
 import { IngredientService } from '@/gen/ingredientRain_connect';
 import { Ingredient as IngredientType } from '../../gen/ingredientRain_pb';
@@ -22,6 +23,7 @@ export default function Confirmation() {
 
   const ingredients = useAppSelector(selectGetIngredients);
   const [res, setRes] = useState<Array<IngredientType>>([]);
+  const [addedIngredients, setAddedIngredients] = useState<Array<TypeOfIngredient>>([]);
 
   const get = async () => {
     const stream = client.streamIngredient({});
@@ -34,11 +36,13 @@ export default function Confirmation() {
   const [dom, setDom] = useState<Array<JSX.Element>>([]);
 
   useEffect(() => {
-    const removeElement = (index: number) => {
+    const removeElement = (index: number, element: TypeOfIngredient) => {
       setDom((prevDom) => {
         const updatedDom = [...prevDom];
         const removed = updatedDom.splice(index, 1);
+        setAddedIngredients((prevAddedIngredients) => [...prevAddedIngredients, element]); // 更新後の値を使用して addedIngredients を更新
         console.log(removed, 'Dom is deleted out of screen (but in store)!');
+        console.log('Now', addedIngredients, 'are in the sending list');
         return updatedDom;
       });
     };
@@ -52,7 +56,7 @@ export default function Confirmation() {
           animate={{ y: '110vh' }}
           transition={{
             delay: durationTime,
-            duration: 30,
+            duration: 5,
           }}
           initial={{
             y: '-130vh',
@@ -63,9 +67,8 @@ export default function Confirmation() {
       );
 
       setTimeout(() => {
-        console.log('here');
-        removeElement(Number(index));
-      }, 10 * 1000);
+        removeElement(Number(index), element);
+      }, 5 * 1000);
 
       setDom((prevDom) => {
         const newDom = [...prevDom, motionDiv];
@@ -107,6 +110,7 @@ export default function Confirmation() {
           <div className='absolute w-full md:grid lg:grid-cols-6 lg:gap-10 md:grid-cols-4 md:gap-5 hidden'>{dom}</div>
           <Image src={panImage} alt='' layout='full' objectFit='contain' className='w-5/6' />
           <div className='flex md:flex-col md:justify-start flex-row justify-center md:mt-0 mt-20'>
+            <AddedIngredientsList ingredientsData={addedIngredients} />
             <GenericButton label='蓋を閉じる' func={() => handleGetRecipes(ingredients)} colour='#FEF4EF' />
             <br className='md:block hidden'></br>
             <GenericButton label='鍋を空にする' func={() => handleDeleteIngredients()} colour='#FEF4EF' />
