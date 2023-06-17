@@ -3,20 +3,39 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CreateIngredientRequest, CreateIngredientResponse, CreateRecipeRequest, CreateRecipeResponse, DeleteIngredientRequest, DeleteIngredientResponse, DeleteRecipeRequest, DeleteRecipeResponse, GetIngredientListRequest, GetIngredientListResponse, GetRecipeListRequest, GetRecipeListResponse, StreamIngredientRequest, StreamIngredientResponse, UpdateIngredientRequest, UpdateIngredientResponse, UpdateRecipeRequest, UpdateRecipeResponse } from "./ingredientRain_pb.js";
-import { MethodKind } from "@bufbuild/protobuf";
+import {
+  CreateIngredientRequest,
+  CreateIngredientResponse,
+  CreateRecipeRequest,
+  CreateRecipeResponse,
+  DeleteIngredientRequest,
+  DeleteIngredientResponse,
+  DeleteRecipeRequest,
+  DeleteRecipeResponse,
+  GetIngredientListRequest,
+  GetIngredientListResponse,
+  GetRecipeListRequest,
+  GetRecipeListResponse,
+  StreamIngredientRequest,
+  StreamIngredientResponse,
+  UpdateIngredientRequest,
+  UpdateIngredientResponse,
+  UpdateRecipeRequest,
+  UpdateRecipeResponse,
+} from './ingredientRain_pb.ts';
+import { MethodKind } from '@bufbuild/protobuf';
 
 /**
  * @generated from service rpc.ingredientRain.v1.IngredientService
  */
 export const IngredientService = {
-  typeName: "rpc.ingredientRain.v1.IngredientService",
+  typeName: 'rpc.ingredientRain.v1.IngredientService',
   methods: {
     /**
      * @generated from rpc rpc.ingredientRain.v1.IngredientService.StreamIngredient
      */
     streamIngredient: {
-      name: "StreamIngredient",
+      name: 'StreamIngredient',
       I: StreamIngredientRequest,
       O: StreamIngredientResponse,
       kind: MethodKind.ServerStreaming,
@@ -25,7 +44,7 @@ export const IngredientService = {
      * @generated from rpc rpc.ingredientRain.v1.IngredientService.GetIngredientList
      */
     getIngredientList: {
-      name: "GetIngredientList",
+      name: 'GetIngredientList',
       I: GetIngredientListRequest,
       O: GetIngredientListResponse,
       kind: MethodKind.Unary,
@@ -34,7 +53,7 @@ export const IngredientService = {
      * @generated from rpc rpc.ingredientRain.v1.IngredientService.CreateIngredient
      */
     createIngredient: {
-      name: "CreateIngredient",
+      name: 'CreateIngredient',
       I: CreateIngredientRequest,
       O: CreateIngredientResponse,
       kind: MethodKind.Unary,
@@ -43,7 +62,7 @@ export const IngredientService = {
      * @generated from rpc rpc.ingredientRain.v1.IngredientService.UpdateIngredient
      */
     updateIngredient: {
-      name: "UpdateIngredient",
+      name: 'UpdateIngredient',
       I: UpdateIngredientRequest,
       O: UpdateIngredientResponse,
       kind: MethodKind.Unary,
@@ -52,25 +71,25 @@ export const IngredientService = {
      * @generated from rpc rpc.ingredientRain.v1.IngredientService.DeleteIngredient
      */
     deleteIngredient: {
-      name: "DeleteIngredient",
+      name: 'DeleteIngredient',
       I: DeleteIngredientRequest,
       O: DeleteIngredientResponse,
       kind: MethodKind.Unary,
     },
-  }
+  },
 } as const;
 
 /**
  * @generated from service rpc.ingredientRain.v1.RecipeService
  */
 export const RecipeService = {
-  typeName: "rpc.ingredientRain.v1.RecipeService",
+  typeName: 'rpc.ingredientRain.v1.RecipeService',
   methods: {
     /**
      * @generated from rpc rpc.ingredientRain.v1.RecipeService.GetRecipeList
      */
     getRecipeList: {
-      name: "GetRecipeList",
+      name: 'GetRecipeList',
       I: GetRecipeListRequest,
       O: GetRecipeListResponse,
       kind: MethodKind.Unary,
@@ -79,7 +98,7 @@ export const RecipeService = {
      * @generated from rpc rpc.ingredientRain.v1.RecipeService.CreateRecipe
      */
     createRecipe: {
-      name: "CreateRecipe",
+      name: 'CreateRecipe',
       I: CreateRecipeRequest,
       O: CreateRecipeResponse,
       kind: MethodKind.Unary,
@@ -88,7 +107,7 @@ export const RecipeService = {
      * @generated from rpc rpc.ingredientRain.v1.RecipeService.UpdateRecipe
      */
     updateRecipe: {
-      name: "UpdateRecipe",
+      name: 'UpdateRecipe',
       I: UpdateRecipeRequest,
       O: UpdateRecipeResponse,
       kind: MethodKind.Unary,
@@ -97,11 +116,10 @@ export const RecipeService = {
      * @generated from rpc rpc.ingredientRain.v1.RecipeService.DeleteRecipe
      */
     deleteRecipe: {
-      name: "DeleteRecipe",
+      name: 'DeleteRecipe',
       I: DeleteRecipeRequest,
       O: DeleteRecipeResponse,
       kind: MethodKind.Unary,
     },
-  }
+  },
 } as const;
-
