@@ -1,11 +1,14 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { Fab } from 'ui-neumorphism';
+import { useAppDispatch, useAppSelector } from '@/state/hooks/hooks';
+import { appActions, selectGetIngredients } from '@/state/slices/ingredientSlice';
 
 import Backdrop from '@/components/atoms/BackDrop';
 import GenericButton from '@/components/atoms/GenericButton';
 import { TypeOfIngredient } from '@/models/TypeOfIngredient.model';
 import { modalStyle } from '@/css/general-css';
+import { Dispatch, SetStateAction } from 'react';
 
 const dropIn = {
   hidden: {
@@ -28,13 +31,19 @@ const dropIn = {
   },
 };
 
-// グローバルに値を追加する
-const handleAddIngredient = () => {
-  console.log('Added to the list!');
-  return null;
-};
-
-export default function Modal(props: { handleClose: () => void; ingredient: TypeOfIngredient }) {
+export default function Modal(props: {
+  handleClose: () => void;
+  ingredient: TypeOfIngredient;
+  setShowDetail: Dispatch<SetStateAction<boolean>>;
+}) {
+  const dispatch = useAppDispatch();
+  const ingredients = useAppSelector(selectGetIngredients);
+  // グローバルに値を追加する
+  function handleAddIngredient(ingredient: TypeOfIngredient) {
+    dispatch(appActions.addIngredient(ingredient));
+    console.log('Ingredients is', ingredients, 'now!');
+    props.setShowDetail(false);
+  }
   return (
     <Backdrop onClick={props.handleClose}>
       <motion.div
@@ -60,7 +69,7 @@ export default function Modal(props: { handleClose: () => void; ingredient: Type
           </div>
           <div className='w-1/2'>{props.ingredient.description}</div>
         </div>
-        <GenericButton label='追加' func={handleAddIngredient} colour='#EF9090' />
+        <GenericButton label='追加' func={() => handleAddIngredient(props.ingredient)} colour='#EF9090' />
       </motion.div>
     </Backdrop>
   );
