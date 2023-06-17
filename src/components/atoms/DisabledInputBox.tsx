@@ -7,7 +7,7 @@ import sendIcon from '../../assets/send-icon.svg';
 import { useRouter } from 'next/navigation';
 import data from '@/data/mockData.json';
 
-export default function InputBox() {
+export default function DisabledInputBox() {
   const router = useRouter();
 
   // グローバルに定義されたingredientsから値を取得
@@ -25,7 +25,7 @@ export default function InputBox() {
 
   return (
     <>
-      <div className='w-full fixed bottom-5 left-0 right-0 flex justify-center items-center'>
+      <div className='w-full bottom-5 left-0 right-0 flex justify-center items-center'>
         {/* @ts-ignore */}
         <Card
           elevation={3}
@@ -110,7 +110,7 @@ export default function InputBox() {
           class='send_button'
           onClick={() => handlePageSwitch('/confirmation')}
           bgColor='#EF9090'
-          style={{ position: 'relative', width: '6%', height: '10%', aspectRatio: '1/1', borderRadius: '25px' }}
+          style={{ position: 'relative', borderRadius: '25px' }}
         >
           <Image src={sendIcon} alt='' layout='fill' objectFit='contain' className='p-5' />
         </Button>

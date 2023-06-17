@@ -1,5 +1,6 @@
 export interface TypeOfIngredient {
-  name: string;
-  url: string | any;
+  uuid: string;
+  title: string;
   description: string;
+  image_url: string | any;
 }
