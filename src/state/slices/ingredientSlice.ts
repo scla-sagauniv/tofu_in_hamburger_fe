@@ -26,6 +26,9 @@ export const appSlice = createSlice({
       // make IngredientsOfEveryone empty first
       state.ingredients = action.payload;
     },
+    deleteAllIngredients: (state) => {
+      state.ingredients = [];
+    },
   },
 });
 
