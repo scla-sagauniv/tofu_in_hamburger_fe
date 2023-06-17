@@ -1,4 +1,5 @@
 import { Button } from 'ui-neumorphism';
+import { TypeOfIngredient } from '@/models/TypeOfIngredient.model';
 
 export default function GenericButton(props: { label: string; func: () => void; colour: string }) {
   return (

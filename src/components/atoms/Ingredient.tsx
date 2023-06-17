@@ -8,9 +8,9 @@ import { TypeOfIngredient } from '@/models/TypeOfIngredient.model';
 import { modalStyle } from '@/css/general-css';
 
 export default function Ingredient(props: { ingredient: TypeOfIngredient }) {
-  const [showDetail, setshowDetail] = useState(false);
-  const close = () => setshowDetail(false);
-  const open = () => setshowDetail(true);
+  const [showDetail, setShowDetail] = useState(false);
+  const close = () => setShowDetail(false);
+  const open = () => setShowDetail(true);
 
   return (
     <>
@@ -25,7 +25,7 @@ export default function Ingredient(props: { ingredient: TypeOfIngredient }) {
         // Fires when all exiting nodes have completed animating out
         onExitComplete={() => null}
       >
-        {showDetail && <Modal handleClose={close} ingredient={props.ingredient} />}
+        {showDetail && <Modal handleClose={close} ingredient={props.ingredient} setShowDetail={setShowDetail} />}
       </AnimatePresence>
 
       <motion.a whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} onClick={() => (showDetail ? close() : open())}>

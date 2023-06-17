@@ -1,10 +1,12 @@
 import Title from '../atoms/Title';
 import Switcher from '../atoms/Switcher';
 import GenericButton from '../atoms/GenericButton';
+import { useRouter } from 'next/navigation';
 export default function Header(props: { title: string; isSend: boolean }) {
+  const route = useRouter();
   const openLid = () => {
     console.log('Open the lid');
-    return null;
+    route.push('/confirmation');
   };
   return (
     <>
