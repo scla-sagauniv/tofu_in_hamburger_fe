@@ -2,10 +2,8 @@ import { Card, CardContent, Badge, IconButton, Fab, Button } from 'ui-neumorphis
 import Image from 'next/image';
 
 import { TypeOfIngredient } from '@/models/TypeOfIngredient.model';
-import pic from '../../assets/chicken_png.png';
 import sendIcon from '../../assets/send-icon.svg';
 import { useRouter } from 'next/navigation';
-import data from '@/data/mockData.json';
 import { useAppSelector } from '@/state/hooks/hooks';
 import { appActions, selectGetIngredients } from '@/state/slices/ingredientSlice';
 import { useDispatch } from 'react-redux';
@@ -20,6 +18,9 @@ export default function InputBox() {
   const ingredientsData: Array<TypeOfIngredient> = useAppSelector(selectGetIngredients);
 
   const handleSendIngredientsAndPageSwitch = (path: string) => {
+    // グローバルに定義されたingredientsを利用してgrpcからserver streamingの値を得る
+    // のは，実際にリアルタイムで値が反映されている次ページの方がいいのか
+    console.log(ingredientsData);
     router.push(path);
   };
 
@@ -123,6 +124,6 @@ export default function InputBox() {
       </>
     );
   } else {
-    return '';
+    return <></>;
   }
 }

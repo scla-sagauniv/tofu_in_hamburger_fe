@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { TypeOfIngredient } from '@/models/TypeOfIngredient.model';
 import sendIcon from '../../assets/send-icon.svg';
 import { useRouter } from 'next/navigation';
-import data from '@/data/mockData.json';
 import { useAppSelector } from '@/state/hooks/hooks';
 import { selectGetIngredients } from '@/state/slices/ingredientSlice';
 
@@ -120,6 +119,6 @@ export default function DisabledInputBox() {
       </>
     );
   } else {
-    return '';
+    return <></>;
   }
 }
