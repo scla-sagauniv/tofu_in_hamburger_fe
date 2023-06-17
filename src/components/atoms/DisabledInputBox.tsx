@@ -5,24 +5,29 @@ import { TypeOfIngredient } from '@/models/TypeOfIngredient.model';
 import sendIcon from '../../assets/send-icon.svg';
 import { useRouter } from 'next/navigation';
 import { useAppSelector } from '@/state/hooks/hooks';
-import { selectGetIngredients } from '@/state/slices/ingredientSlice';
+import { appActions, selectGetIngredients } from '@/state/slices/ingredientSlice';
+import { useDispatch } from 'react-redux';
 
-export default function DisabledInputBox() {
+export default function InputBox() {
   const router = useRouter();
+
+  const dispatch = useDispatch();
 
   // グローバルに定義されたingredientsから値を取得
   // ***** mock data
   const ingredientsData: Array<TypeOfIngredient> = useAppSelector(selectGetIngredients);
 
-  const handlePageSwitch = (path: string) => {
+  const handleSendIngredientsAndPageSwitch = (path: string) => {
+    // グローバルに定義されたingredientsを利用してgrpcからserver streamingの値を得る
+    // のは，実際にリアルタイムで値が反映されている次ページの方がいいのか
+    console.log(ingredientsData);
     router.push(path);
   };
 
-  const handleDeleteIngredients = () => {
-    console.log("Ingredients are deleted. The user'll be sent back to the send page.");
-    return null;
-  };
-
+  function handleDeleteIngredients(uuid: string) {
+    dispatch(appActions.deleteIngredientByUuid(uuid));
+    console.log('An ingredient', uuid, 'is deleted. Now you have', ingredientsData);
+  }
   if (ingredientsData.length !== 0) {
     return (
       <>
@@ -70,7 +75,7 @@ export default function DisabledInputBox() {
                     bgColor='#E4EBF5'
                     className='absolute'
                     style={{ top: '-7px', right: '-13px' }}
-                    onClick={handleDeleteIngredients}
+                    onClick={() => handleDeleteIngredients(element.uuid as string)}
                   >
                     <span style={{ fontSize: '18px', margin: '1px 0px 0px 1px', fontWeight: 'bold' }}>&times;</span>
                   </IconButton>
@@ -109,7 +114,7 @@ export default function DisabledInputBox() {
           {/* @ts-ignore */}
           <Button
             class='send_button'
-            onClick={() => handlePageSwitch('/confirmation')}
+            onClick={() => handleSendIngredientsAndPageSwitch('/confirmation')}
             bgColor='#EF9090'
             style={{ position: 'relative', borderRadius: '25px' }}
           >
