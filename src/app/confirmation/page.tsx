@@ -38,7 +38,7 @@ export default function Confirmation() {
       setDom((prevDom) => {
         const updatedDom = [...prevDom];
         const removed = updatedDom.splice(index, 1);
-        console.log(removed, 'Dom is Deleted!');
+        console.log(removed, 'Dom is deleted out of screen (but in store)!');
         return updatedDom;
       });
     };
@@ -73,7 +73,7 @@ export default function Confirmation() {
         return newDom;
       });
     }
-  }, [ingredients]);
+  }, []);
 
   // useEffect(() => {
   //   // grpcサーバからserver streamingのデータを取得してくる
