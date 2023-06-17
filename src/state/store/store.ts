@@ -1,7 +1,7 @@
 import { Store, combineReducers } from 'redux';
 import logger from 'redux-logger';
 import { configureStore } from '@reduxjs/toolkit';
-import { appReducer } from '../slices/ingredientSlice';
+import appReducer from '../slices/ingredientSlice';
 
 export const store = configureStore({
   reducer: {
