@@ -20,15 +20,15 @@ export default function Confirmation() {
   };
   return (
     <>
-      <div className='flex flex-col  min-h-screen min-w-screen justify-center items-center px-10'>
+      <div className='flex flex-col  min-h-screen min-w-screen md:justify-center items-center px-10 justify-start'>
         <Header title='' isSend={true} />
-        <div className='w-full h-full flex justify-center items-end px-10 relative'>
-          <Image src={panImage} alt='' width={300} objectFit='contain' className='w-5/6' />
-          <div className='flex flex-col'>
+        <div className='w-full h-full flex md:flex-row flex-col grow md:items-end justify-center items-center md:px-10 relative'>
+          <Image src={panImage} alt='' layout='full' objectFit='contain' className='w-5/6' />
+          <div className='flex md:flex-col md:justify-start flex-row justify-center md:mt-0 mt-20'>
             <GenericButton label='蓋を閉じる' func={handleSend} colour='#FEF4EF' />
-            <br></br>
+            <br className='md:block hidden'></br>
             <GenericButton label='鍋を空にする' func={handleDeleteIngredients} colour='#FEF4EF' />
-            <br></br>
+            <br className='md:block hidden'></br>
           </div>
         </div>
       </div>
