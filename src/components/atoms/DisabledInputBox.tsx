@@ -5,33 +5,28 @@ import { TypeOfIngredient } from '@/models/TypeOfIngredient.model';
 import sendIcon from '../../assets/send-icon.svg';
 import { useRouter } from 'next/navigation';
 import { useAppSelector } from '@/state/hooks/hooks';
-import { appActions, selectGetIngredients } from '@/state/slices/ingredientSlice';
-import { useDispatch } from 'react-redux';
+import { selectGetIngredients } from '@/state/slices/ingredientSlice';
 
-export default function InputBox() {
+export default function DisabledInputBox() {
   const router = useRouter();
-
-  const dispatch = useDispatch();
 
   // グローバルに定義されたingredientsから値を取得
   // ***** mock data
   const ingredientsData: Array<TypeOfIngredient> = useAppSelector(selectGetIngredients);
 
-  const handleSendIngredientsAndPageSwitch = (path: string) => {
-    // グローバルに定義されたingredientsを利用してgrpcからserver streamingの値を得る
-    // のは，実際にリアルタイムで値が反映されている次ページの方がいいのか
-    console.log(ingredientsData);
+  const handlePageSwitch = (path: string) => {
     router.push(path);
   };
 
-  function handleDeleteIngredients(uuid: string) {
-    dispatch(appActions.deleteIngredientByUuid(uuid));
-    console.log('An ingredient', uuid, 'is deleted. Now you have', ingredientsData);
-  }
+  const handleDeleteIngredients = () => {
+    console.log("Ingredients are deleted. The user'll be sent back to the send page.");
+    return null;
+  };
+
   if (ingredientsData.length !== 0) {
     return (
       <>
-        <div className='w-full fixed bottom-5 left-0 right-0 flex justify-center items-center'>
+        <div className='w-full bottom-5 left-0 right-0 flex justify-center items-center'>
           {/* @ts-ignore */}
           <Card
             elevation={3}
@@ -75,7 +70,7 @@ export default function InputBox() {
                     bgColor='#E4EBF5'
                     className='absolute'
                     style={{ top: '-7px', right: '-13px' }}
-                    onClick={() => handleDeleteIngredients(element.uuid as string)}
+                    onClick={handleDeleteIngredients}
                   >
                     <span style={{ fontSize: '18px', margin: '1px 0px 0px 1px', fontWeight: 'bold' }}>&times;</span>
                   </IconButton>
@@ -114,9 +109,9 @@ export default function InputBox() {
           {/* @ts-ignore */}
           <Button
             class='send_button'
-            onClick={() => handleSendIngredientsAndPageSwitch('/confirmation')}
+            onClick={() => handlePageSwitch('/confirmation')}
             bgColor='#EF9090'
-            style={{ position: 'relative', width: '6%', height: '10%', aspectRatio: '1/1', borderRadius: '25px' }}
+            style={{ position: 'relative', borderRadius: '25px' }}
           >
             <Image src={sendIcon} alt='' layout='fill' objectFit='contain' className='p-5' />
           </Button>

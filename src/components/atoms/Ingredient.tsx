@@ -4,13 +4,13 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 import Modal from '@/components/molecules/Modal';
-import { TypeOfIngredient } from '@/models/TypeOfIngredient';
+import { TypeOfIngredient } from '@/models/TypeOfIngredient.model';
 import { modalStyle } from '@/css/general-css';
 
 export default function Ingredient(props: { ingredient: TypeOfIngredient }) {
-  const [showDetail, setshowDetail] = useState(false);
-  const close = () => setshowDetail(false);
-  const open = () => setshowDetail(true);
+  const [showDetail, setShowDetail] = useState(false);
+  const close = () => setShowDetail(false);
+  const open = () => setShowDetail(true);
 
   return (
     <>
@@ -25,13 +25,13 @@ export default function Ingredient(props: { ingredient: TypeOfIngredient }) {
         // Fires when all exiting nodes have completed animating out
         onExitComplete={() => null}
       >
-        {showDetail && <Modal handleClose={close} ingredient={props.ingredient} />}
+        {showDetail && <Modal handleClose={close} ingredient={props.ingredient} setShowDetail={setShowDetail} />}
       </AnimatePresence>
 
       <motion.a whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} onClick={() => (showDetail ? close() : open())}>
         {/* @ts-ignore */}
         <Card elevation={3} style={{ width: '80%', aspectRatio: '1/1', borderRadius: '50%', position: 'relative' }}>
-          <Image src={props.ingredient.url} alt='Picture of the author' layout='fill' objectFit='contain' />
+          <Image src={props.ingredient.image_url} alt='Picture of the author' layout='fill' objectFit='contain' />
         </Card>
       </motion.a>
       {modalStyle.styles}

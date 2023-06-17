@@ -1,4 +1,5 @@
 import { Button } from 'ui-neumorphism';
+import { TypeOfIngredient } from '@/models/TypeOfIngredient.model';
 
 export default function GenericButton(props: { label: string; func: () => void; colour: string }) {
   return (
@@ -11,7 +12,7 @@ export default function GenericButton(props: { label: string; func: () => void; 
         size='large'
         style={{ paddingRight: '20px', paddingLeft: '20px', paddingTop: '15px', paddingBottom: '15px' }}
       >
-        <span className='text-xl text-thick'>{props.label}</span>
+        <span className='md:text-xl text-thick'>{props.label}</span>
       </Button>
     </>
   );
