@@ -25,6 +25,7 @@ export default function InputBox() {
   return (
     <>
       <div className='w-full fixed bottom-5 left-0 right-0 flex justify-center items-center'>
+        {/* @ts-ignore */}
         <Card
           elevation={3}
           style={{
@@ -38,6 +39,7 @@ export default function InputBox() {
             marginRight: '1%',
           }}
         >
+          {/* @ts-ignore */}
           <Card
             elevation={3}
             inset
@@ -52,6 +54,7 @@ export default function InputBox() {
             }}
           >
             <Image src={ingredient.url} alt='Picture of the author' layout='fill' objectFit='contain' />
+            {/* @ts-ignore */}
             <IconButton
               rounded
               size='small'
@@ -65,6 +68,7 @@ export default function InputBox() {
             </IconButton>
           </Card>
         </Card>
+        {/* @ts-ignore */}
         <Button
           class='send_button'
           onClick={() => handlePageSwitch('/confirmation')}
