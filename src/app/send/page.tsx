@@ -19,7 +19,7 @@ export default function Send() {
   // delete when it's real ingredients data
   for (let index = 0; index < 9; index++) {
     for (const ingredient of ingredientsData) {
-      ingredients.push(<Ingredient ingredient={ingredient} />);
+      ingredients.push(<Ingredient ingredient={ingredient} isSend={true} />);
     }
   }
 

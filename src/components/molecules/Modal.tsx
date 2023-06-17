@@ -36,6 +36,7 @@ export default function Modal(props: {
   handleClose: () => void;
   ingredient: TypeOfIngredient;
   setShowDetail: Dispatch<SetStateAction<boolean>>;
+  isSend: boolean;
 }) {
   // const { v4: uuidv4 } = require('uuid');
   const dispatch = useAppDispatch();
@@ -71,7 +72,11 @@ export default function Modal(props: {
           </div>
           <div className='w-1/2'>{props.ingredient.description}</div>
         </div>
-        <GenericButton label='追加' func={() => handleAddIngredient(props.ingredient)} colour='#EF9090' />
+        {props.isSend ? (
+          <GenericButton label='追加' func={() => handleAddIngredient(props.ingredient)} colour='#EF9090' />
+        ) : (
+          <></>
+        )}
       </motion.div>
     </Backdrop>
   );
