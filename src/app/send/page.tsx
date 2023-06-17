@@ -6,21 +6,21 @@ import Header from '@/components/molecules/Header';
 import InputBox from '@/components/atoms/InputBox';
 import DisabledInputBox from '@/components/atoms/DisabledInputBox';
 import { TypeOfIngredient } from '@/models/TypeOfIngredient.model';
-import pic from '../../assets/image_png.png';
+import pic from '../../assets/chicken_png.png';
+import data from '@/data/mockData.json';
 
 // ***** mock data
-const ingredient: TypeOfIngredient = {
-  name: 'チキン',
-  url: pic,
-  description:
-    'おいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニク',
-};
+const ingredientsData: Array<TypeOfIngredient> = data.data;
 
 export default function Send() {
   // ***** demo
   const ingredients: Array<JSX.Element> = [];
-  for (let index = 0; index < 36; index++) {
-    ingredients.push(<Ingredient ingredient={ingredient} />);
+
+  // delete when it's real ingredients data
+  for (let index = 0; index < 9; index++) {
+    for (const ingredient of ingredientsData) {
+      ingredients.push(<Ingredient ingredient={ingredient} />);
+    }
   }
 
   // グローバルに値を追加する
@@ -44,9 +44,13 @@ export default function Send() {
 
           {/* The following component is only for mobile */}
           <select onChange={(e) => handleAddIngredient(e)} className='md:hidden'>
-            <option value={ingredient.name}>{ingredient.name}</option>
-            <option value={ingredient.name}>{ingredient.name}</option>
-            <option value={ingredient.name}>{ingredient.name}</option>
+            {ingredientsData.map((element, index) => {
+              return (
+                <option key={index} value={element.title}>
+                  {element.title}
+                </option>
+              );
+            })}
           </select>
         </div>
       </div>

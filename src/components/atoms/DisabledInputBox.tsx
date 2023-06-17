@@ -2,24 +2,25 @@ import { Card, CardContent, Badge, IconButton, Fab, Button } from 'ui-neumorphis
 import Image from 'next/image';
 
 import { TypeOfIngredient } from '@/models/TypeOfIngredient.model';
-import pic from '../../assets/image_png.png';
+import pic from '../../assets/chicken_png.png';
 import sendIcon from '../../assets/send-icon.svg';
 import { useRouter } from 'next/navigation';
+import data from '@/data/mockData.json';
 
 export default function DisabledInputBox() {
   const router = useRouter();
 
   // グローバルに定義されたingredientsから値を取得
   // ***** mock data
-  const ingredient: TypeOfIngredient = {
-    name: 'チキン',
-    url: pic,
-    description:
-      'おいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニクおいしいトリニク',
-  };
+  const ingredientsData: Array<TypeOfIngredient> = data.data;
 
   const handlePageSwitch = (path: string) => {
     router.push(path);
+  };
+
+  const handleDeleteIngredients = () => {
+    console.log("Ingredients are deleted. The user'll be sent back to the send page.");
+    return null;
   };
 
   return (
@@ -39,35 +40,70 @@ export default function DisabledInputBox() {
             marginRight: '1%',
           }}
         >
-          {/* 中のアイテム */}
-          {/* @ts-ignore */}
-          <Card
-            elevation={3}
-            inset
-            style={{
-              display: 'none',
-              width: '7%',
-              aspectRatio: '1/1',
-              borderRadius: '50%',
-              position: 'relative',
-              marginRight: '2%',
-              backgroundColor: 'white',
-            }}
-          >
-            <Image src={ingredient.url} alt='Picture of the author' layout='fill' objectFit='contain' />
-            {/* @ts-ignore */}
-            <IconButton
-              rounded
-              size='small'
-              text={false}
-              color='#5E5E5E'
-              bgColor='#E4EBF5'
-              className='absolute'
-              style={{ top: '-7px', right: '-13px' }}
-            >
-              <span style={{ fontSize: '18px', margin: '1px 0px 0px 1px', fontWeight: 'bold' }}>&times;</span>
-            </IconButton>
-          </Card>
+          {/* The following component cannot be seen in mobile */}
+          {ingredientsData.map((element, index) => {
+            return (
+              // @ts-ignore
+              <Card
+                key={index}
+                elevation={3}
+                inset
+                style={{
+                  width: '7%',
+                  aspectRatio: '1/1',
+                  borderRadius: '50%',
+                  position: 'relative',
+                  marginRight: '2%',
+                  backgroundColor: 'white',
+                }}
+                className='lg:inline-block hidden'
+              >
+                <Image src={element.image_url} alt='Picture of the author' layout='fill' objectFit='contain' />
+                {/* <Image src={ingredient.image_url} alt='Picture of the author' layout='fill' objectFit='contain' /> */}
+                {/* @ts-ignore */}
+                <IconButton
+                  rounded
+                  size='small'
+                  text={false}
+                  color='#5E5E5E'
+                  bgColor='#E4EBF5'
+                  className='absolute'
+                  style={{ top: '-7px', right: '-13px' }}
+                  onClick={handleDeleteIngredients}
+                >
+                  <span style={{ fontSize: '18px', margin: '1px 0px 0px 1px', fontWeight: 'bold' }}>&times;</span>
+                </IconButton>
+              </Card>
+            );
+          })}
+
+          {/* The following component is only for mobile */}
+          {ingredientsData.map((element, index) => {
+            return (
+              // @ts-ignore
+              <Card
+                key={index}
+                elevation={0}
+                style={{
+                  width: '100%',
+                  borderRadius: '50px',
+                  paddingTop: '5px',
+                  paddingRight: '20px',
+                  paddingBottom: '5px',
+                  paddingLeft: '20px',
+                  backgroundColor: 'white',
+                  marginBottom: '1%',
+                }}
+                className='flex justify-between items-center lg:hidden'
+              >
+                <div>{element.title}</div>
+                {/* @ts-ignore */}
+                <Button rounded color='#5E5E5E' bgColor='#E4EBF5' size='small' onClick={handleDeleteIngredients}>
+                  <span style={{ fontSize: '18px', margin: '1px 0px 0px 1px', fontWeight: 'bold' }}>&times;</span>
+                </Button>
+              </Card>
+            );
+          })}
         </Card>
         {/* @ts-ignore */}
         <Button
