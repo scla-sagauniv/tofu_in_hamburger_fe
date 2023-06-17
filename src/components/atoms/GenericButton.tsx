@@ -3,6 +3,7 @@ import { Button } from 'ui-neumorphism';
 export default function GenericButton(props: { label: string; func: () => void; colour: string }) {
   return (
     <>
+      {/* @ts-ignore */}
       <Button
         rounded
         onClick={props.func}

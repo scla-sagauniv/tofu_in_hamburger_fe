@@ -29,6 +29,7 @@ export default function Ingredient(props: { ingredient: TypeOfIngredient }) {
       </AnimatePresence>
 
       <motion.a whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} onClick={() => (showDetail ? close() : open())}>
+        {/* @ts-ignore */}
         <Card elevation={3} style={{ width: '80%', aspectRatio: '1/1', borderRadius: '50%', position: 'relative' }}>
           <Image src={props.ingredient.url} alt='Picture of the author' layout='fill' objectFit='contain' />
         </Card>
