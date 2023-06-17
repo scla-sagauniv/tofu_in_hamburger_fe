@@ -1,7 +1,7 @@
 import { Card, CardContent, Badge, IconButton, Fab, Button } from 'ui-neumorphism';
 import Image from 'next/image';
 
-import { TypeOfIngredient } from '@/models/TypeOfIngredient';
+import { TypeOfIngredient } from '@/models/TypeOfIngredient.model';
 import pic from '../../assets/image_png.png';
 import sendIcon from '../../assets/send-icon.svg';
 import { useRouter } from 'next/navigation';

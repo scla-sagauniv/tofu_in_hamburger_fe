@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 import Modal from '@/components/molecules/Modal';
-import { TypeOfIngredient } from '@/models/TypeOfIngredient';
+import { TypeOfIngredient } from '@/models/TypeOfIngredient.model';
 import { modalStyle } from '@/css/general-css';
 
 export default function Ingredient(props: { ingredient: TypeOfIngredient }) {

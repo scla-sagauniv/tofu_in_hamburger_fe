@@ -4,7 +4,7 @@ import { Fab } from 'ui-neumorphism';
 
 import Backdrop from '@/components/atoms/BackDrop';
 import GenericButton from '@/components/atoms/GenericButton';
-import { TypeOfIngredient } from '@/models/TypeOfIngredient';
+import { TypeOfIngredient } from '@/models/TypeOfIngredient.model';
 import { modalStyle } from '@/css/general-css';
 
 const dropIn = {

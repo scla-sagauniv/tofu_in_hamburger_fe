@@ -5,7 +5,7 @@ import Ingredient from '@/components/atoms/Ingredient';
 import Header from '@/components/molecules/Header';
 import InputBox from '@/components/atoms/InputBox';
 import DisabledInputBox from '@/components/atoms/DisabledInputBox';
-import { TypeOfIngredient } from '@/models/TypeOfIngredient';
+import { TypeOfIngredient } from '@/models/TypeOfIngredient.model';
 import pic from '../../assets/image_png.png';
 
 // ***** mock data
