@@ -22,6 +22,11 @@ export default function InputBox() {
     router.push(path);
   };
 
+  const handleDeleteIngredients = () => {
+    console.log("Ingredients are deleted. The user'll be sent back to the send page.");
+    return null;
+  };
+
   return (
     <>
       <div className='w-full fixed bottom-5 left-0 right-0 flex justify-center items-center'>
@@ -38,11 +43,11 @@ export default function InputBox() {
             marginRight: '1%',
           }}
         >
+          {/* The following component cannot be seen in mobile */}
           <Card
             elevation={3}
             inset
             style={{
-              display: 'inline-block',
               width: '7%',
               aspectRatio: '1/1',
               borderRadius: '50%',
@@ -50,6 +55,7 @@ export default function InputBox() {
               marginRight: '2%',
               backgroundColor: 'white',
             }}
+            className='lg:inline-block hidden'
           >
             <Image src={ingredient.url} alt='Picture of the author' layout='fill' objectFit='contain' />
             <IconButton
@@ -60,9 +66,31 @@ export default function InputBox() {
               bgColor='#E4EBF5'
               className='absolute'
               style={{ top: '-7px', right: '-13px' }}
+              onClick={handleDeleteIngredients}
             >
               <span style={{ fontSize: '18px', margin: '1px 0px 0px 1px', fontWeight: 'bold' }}>&times;</span>
             </IconButton>
+          </Card>
+
+          {/* The following component is only for mobile */}
+          <Card
+            elevation={0}
+            style={{
+              width: '100%',
+              borderRadius: '50px',
+              paddingTop: '5px',
+              paddingRight: '20px',
+              paddingBottom: '5px',
+              paddingLeft: '20px',
+              backgroundColor: 'white',
+              marginBottom: '1%',
+            }}
+            className='flex justify-between items-center lg:hidden'
+          >
+            <div>{ingredient.name}</div>
+            <Button rounded color='#5E5E5E' bgColor='#E4EBF5' size='small' onClick={handleDeleteIngredients}>
+              <span style={{ fontSize: '18px', margin: '1px 0px 0px 1px', fontWeight: 'bold' }}>&times;</span>
+            </Button>
           </Card>
         </Card>
         <Button
