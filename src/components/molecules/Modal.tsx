@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { Fab } from 'ui-neumorphism';
 import { useAppDispatch, useAppSelector } from '@/state/hooks/hooks';
 import { appActions, selectGetIngredients } from '@/state/slices/ingredientSlice';
+import { v4 as uuidv4 } from 'uuid';
 
 import Backdrop from '@/components/atoms/BackDrop';
 import GenericButton from '@/components/atoms/GenericButton';
@@ -36,11 +37,12 @@ export default function Modal(props: {
   ingredient: TypeOfIngredient;
   setShowDetail: Dispatch<SetStateAction<boolean>>;
 }) {
+  // const { v4: uuidv4 } = require('uuid');
   const dispatch = useAppDispatch();
   const ingredients = useAppSelector(selectGetIngredients);
   // グローバルに値を追加する
   function handleAddIngredient(ingredient: TypeOfIngredient) {
-    dispatch(appActions.addIngredient(ingredient));
+    dispatch(appActions.addIngredient({ ...ingredient, uuid: uuidv4() }));
     console.log('Ingredients is', ingredients, 'now!');
     props.setShowDetail(false);
   }

@@ -24,9 +24,9 @@ export default function InputBox() {
     router.push(path);
   };
 
-  function handleDeleteIngredients(id: string) {
-    dispatch(appActions.deleteIngredientByUuid(id));
-    console.log('An ingredient', id, 'is deleted. Now you have', ingredientsData);
+  function handleDeleteIngredients(uuid: string) {
+    dispatch(appActions.deleteIngredientByUuid(uuid));
+    console.log('An ingredient', uuid, 'is deleted. Now you have', ingredientsData);
   }
   if (ingredientsData.length !== 0) {
     return (
@@ -75,7 +75,7 @@ export default function InputBox() {
                     bgColor='#E4EBF5'
                     className='absolute'
                     style={{ top: '-7px', right: '-13px' }}
-                    onClick={() => handleDeleteIngredients(element.uuid)}
+                    onClick={() => handleDeleteIngredients(element.uuid as string)}
                   >
                     <span style={{ fontSize: '18px', margin: '1px 0px 0px 1px', fontWeight: 'bold' }}>&times;</span>
                   </IconButton>
