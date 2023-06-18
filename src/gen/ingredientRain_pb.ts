@@ -16,34 +16,34 @@ export class Ingredient extends Message<Ingredient> {
   id = protoInt64.zero;
 
   /**
-   * @generated from field: string titile = 2;
+   * @generated from field: string uuid = 2;
    */
-  titile = "";
+  uuid = "";
 
   /**
-   * @generated from field: string description = 3;
+   * @generated from field: string title = 3;
+   */
+  title = "";
+
+  /**
+   * @generated from field: string description = 4;
    */
   description = "";
 
   /**
-   * @generated from field: string image_url = 4;
+   * @generated from field: string image_url = 5;
    */
   imageUrl = "";
 
   /**
-   * @generated from field: google.protobuf.Timestamp created_at = 5;
+   * @generated from field: google.protobuf.Timestamp created_at = 6;
    */
   createdAt?: Timestamp;
 
   /**
-   * @generated from field: google.protobuf.Timestamp updated_at = 6;
+   * @generated from field: google.protobuf.Timestamp updated_at = 7;
    */
   updatedAt?: Timestamp;
-
-  /**
-   * @generated from field: string uuid = 7;
-   */
-  uuid = "";
 
   constructor(data?: PartialMessage<Ingredient>) {
     super();
@@ -54,12 +54,12 @@ export class Ingredient extends Message<Ingredient> {
   static readonly typeName = "rpc.ingredientRain.v1.Ingredient";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
-    { no: 2, name: "titile", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 3, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 4, name: "image_url", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 5, name: "created_at", kind: "message", T: Timestamp },
-    { no: 6, name: "updated_at", kind: "message", T: Timestamp },
-    { no: 7, name: "uuid", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "uuid", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "title", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "image_url", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "created_at", kind: "message", T: Timestamp },
+    { no: 7, name: "updated_at", kind: "message", T: Timestamp },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Ingredient {
@@ -250,9 +250,9 @@ export class GetIngredientListRequest extends Message<GetIngredientListRequest> 
  */
 export class GetIngredientListResponse extends Message<GetIngredientListResponse> {
   /**
-   * @generated from field: repeated rpc.ingredientRain.v1.Ingredient ingredients = 1;
+   * @generated from field: repeated rpc.ingredientRain.v1.IngredientOnDb ingredients = 1;
    */
-  ingredients: Ingredient[] = [];
+  ingredients: IngredientOnDb[] = [];
 
   constructor(data?: PartialMessage<GetIngredientListResponse>) {
     super();
@@ -262,7 +262,7 @@ export class GetIngredientListResponse extends Message<GetIngredientListResponse
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "rpc.ingredientRain.v1.GetIngredientListResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "ingredients", kind: "message", T: Ingredient, repeated: true },
+    { no: 1, name: "ingredients", kind: "message", T: IngredientOnDb, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetIngredientListResponse {
@@ -279,6 +279,74 @@ export class GetIngredientListResponse extends Message<GetIngredientListResponse
 
   static equals(a: GetIngredientListResponse | PlainMessage<GetIngredientListResponse> | undefined, b: GetIngredientListResponse | PlainMessage<GetIngredientListResponse> | undefined): boolean {
     return proto3.util.equals(GetIngredientListResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message rpc.ingredientRain.v1.SendIngredientsRequst
+ */
+export class SendIngredientsRequst extends Message<SendIngredientsRequst> {
+  /**
+   * @generated from field: repeated rpc.ingredientRain.v1.Ingredient ingredients = 1;
+   */
+  ingredients: Ingredient[] = [];
+
+  constructor(data?: PartialMessage<SendIngredientsRequst>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "rpc.ingredientRain.v1.SendIngredientsRequst";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "ingredients", kind: "message", T: Ingredient, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SendIngredientsRequst {
+    return new SendIngredientsRequst().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SendIngredientsRequst {
+    return new SendIngredientsRequst().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SendIngredientsRequst {
+    return new SendIngredientsRequst().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: SendIngredientsRequst | PlainMessage<SendIngredientsRequst> | undefined, b: SendIngredientsRequst | PlainMessage<SendIngredientsRequst> | undefined): boolean {
+    return proto3.util.equals(SendIngredientsRequst, a, b);
+  }
+}
+
+/**
+ * @generated from message rpc.ingredientRain.v1.SendIngredientsResponse
+ */
+export class SendIngredientsResponse extends Message<SendIngredientsResponse> {
+  constructor(data?: PartialMessage<SendIngredientsResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "rpc.ingredientRain.v1.SendIngredientsResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SendIngredientsResponse {
+    return new SendIngredientsResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SendIngredientsResponse {
+    return new SendIngredientsResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SendIngredientsResponse {
+    return new SendIngredientsResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: SendIngredientsResponse | PlainMessage<SendIngredientsResponse> | undefined, b: SendIngredientsResponse | PlainMessage<SendIngredientsResponse> | undefined): boolean {
+    return proto3.util.equals(SendIngredientsResponse, a, b);
   }
 }
 
@@ -657,9 +725,9 @@ export class RecipeOnDb extends Message<RecipeOnDb> {
   publishday?: Timestamp;
 
   /**
-   * @generated from field: int64 rank = 10;
+   * @generated from field: int64 ranking = 10;
    */
-  rank = protoInt64.zero;
+  ranking = protoInt64.zero;
 
   /**
    * @generated from field: int64 recipe_indication_id = 11;
@@ -698,7 +766,7 @@ export class RecipeOnDb extends Message<RecipeOnDb> {
     { no: 7, name: "materials", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 8, name: "material_ids", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 9, name: "publishday", kind: "message", T: Timestamp },
-    { no: 10, name: "rank", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 10, name: "ranking", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
     { no: 11, name: "recipe_indication_id", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
     { no: 12, name: "recipe_cost_id", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
     { no: 13, name: "created_at", kind: "message", T: Timestamp },
@@ -758,9 +826,9 @@ export class GetRecipeListRequest extends Message<GetRecipeListRequest> {
  */
 export class GetRecipeListResponse extends Message<GetRecipeListResponse> {
   /**
-   * @generated from field: repeated rpc.ingredientRain.v1.Recipe Recipes = 1;
+   * @generated from field: repeated rpc.ingredientRain.v1.Recipe recipes = 1;
    */
-  Recipes: Recipe[] = [];
+  recipes: Recipe[] = [];
 
   constructor(data?: PartialMessage<GetRecipeListResponse>) {
     super();
@@ -770,7 +838,7 @@ export class GetRecipeListResponse extends Message<GetRecipeListResponse> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "rpc.ingredientRain.v1.GetRecipeListResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "Recipes", kind: "message", T: Recipe, repeated: true },
+    { no: 1, name: "recipes", kind: "message", T: Recipe, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetRecipeListResponse {
@@ -791,76 +859,150 @@ export class GetRecipeListResponse extends Message<GetRecipeListResponse> {
 }
 
 /**
- * @generated from message rpc.ingredientRain.v1.CreateRecipeRequest
+ * @generated from message rpc.ingredientRain.v1.SearchRecipesByIngredientsRequest
  */
-export class CreateRecipeRequest extends Message<CreateRecipeRequest> {
+export class SearchRecipesByIngredientsRequest extends Message<SearchRecipesByIngredientsRequest> {
   /**
-   * @generated from field: rpc.ingredientRain.v1.Recipe Recipe = 1;
+   * @generated from field: repeated rpc.ingredientRain.v1.Ingredient ingredients = 1;
    */
-  Recipe?: Recipe;
+  ingredients: Ingredient[] = [];
 
-  constructor(data?: PartialMessage<CreateRecipeRequest>) {
+  constructor(data?: PartialMessage<SearchRecipesByIngredientsRequest>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "rpc.ingredientRain.v1.CreateRecipeRequest";
+  static readonly typeName = "rpc.ingredientRain.v1.SearchRecipesByIngredientsRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "Recipe", kind: "message", T: Recipe },
+    { no: 1, name: "ingredients", kind: "message", T: Ingredient, repeated: true },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateRecipeRequest {
-    return new CreateRecipeRequest().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SearchRecipesByIngredientsRequest {
+    return new SearchRecipesByIngredientsRequest().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateRecipeRequest {
-    return new CreateRecipeRequest().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SearchRecipesByIngredientsRequest {
+    return new SearchRecipesByIngredientsRequest().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateRecipeRequest {
-    return new CreateRecipeRequest().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SearchRecipesByIngredientsRequest {
+    return new SearchRecipesByIngredientsRequest().fromJsonString(jsonString, options);
   }
 
-  static equals(a: CreateRecipeRequest | PlainMessage<CreateRecipeRequest> | undefined, b: CreateRecipeRequest | PlainMessage<CreateRecipeRequest> | undefined): boolean {
-    return proto3.util.equals(CreateRecipeRequest, a, b);
+  static equals(a: SearchRecipesByIngredientsRequest | PlainMessage<SearchRecipesByIngredientsRequest> | undefined, b: SearchRecipesByIngredientsRequest | PlainMessage<SearchRecipesByIngredientsRequest> | undefined): boolean {
+    return proto3.util.equals(SearchRecipesByIngredientsRequest, a, b);
   }
 }
 
 /**
- * @generated from message rpc.ingredientRain.v1.CreateRecipeResponse
+ * @generated from message rpc.ingredientRain.v1.SearchRecipesByIngredientResponse
  */
-export class CreateRecipeResponse extends Message<CreateRecipeResponse> {
+export class SearchRecipesByIngredientResponse extends Message<SearchRecipesByIngredientResponse> {
   /**
-   * @generated from field: int64 id = 1;
+   * @generated from field: repeated rpc.ingredientRain.v1.Recipe recipes = 1;
    */
-  id = protoInt64.zero;
+  recipes: Recipe[] = [];
 
-  constructor(data?: PartialMessage<CreateRecipeResponse>) {
+  constructor(data?: PartialMessage<SearchRecipesByIngredientResponse>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "rpc.ingredientRain.v1.CreateRecipeResponse";
+  static readonly typeName = "rpc.ingredientRain.v1.SearchRecipesByIngredientResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "id", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 1, name: "recipes", kind: "message", T: Recipe, repeated: true },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateRecipeResponse {
-    return new CreateRecipeResponse().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SearchRecipesByIngredientResponse {
+    return new SearchRecipesByIngredientResponse().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateRecipeResponse {
-    return new CreateRecipeResponse().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SearchRecipesByIngredientResponse {
+    return new SearchRecipesByIngredientResponse().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateRecipeResponse {
-    return new CreateRecipeResponse().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SearchRecipesByIngredientResponse {
+    return new SearchRecipesByIngredientResponse().fromJsonString(jsonString, options);
   }
 
-  static equals(a: CreateRecipeResponse | PlainMessage<CreateRecipeResponse> | undefined, b: CreateRecipeResponse | PlainMessage<CreateRecipeResponse> | undefined): boolean {
-    return proto3.util.equals(CreateRecipeResponse, a, b);
+  static equals(a: SearchRecipesByIngredientResponse | PlainMessage<SearchRecipesByIngredientResponse> | undefined, b: SearchRecipesByIngredientResponse | PlainMessage<SearchRecipesByIngredientResponse> | undefined): boolean {
+    return proto3.util.equals(SearchRecipesByIngredientResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message rpc.ingredientRain.v1.CreateRecipesByBatchRequest
+ */
+export class CreateRecipesByBatchRequest extends Message<CreateRecipesByBatchRequest> {
+  /**
+   * @generated from field: repeated rpc.ingredientRain.v1.RecipeOnDb recipes = 1;
+   */
+  recipes: RecipeOnDb[] = [];
+
+  constructor(data?: PartialMessage<CreateRecipesByBatchRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "rpc.ingredientRain.v1.CreateRecipesByBatchRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "recipes", kind: "message", T: RecipeOnDb, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateRecipesByBatchRequest {
+    return new CreateRecipesByBatchRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateRecipesByBatchRequest {
+    return new CreateRecipesByBatchRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateRecipesByBatchRequest {
+    return new CreateRecipesByBatchRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CreateRecipesByBatchRequest | PlainMessage<CreateRecipesByBatchRequest> | undefined, b: CreateRecipesByBatchRequest | PlainMessage<CreateRecipesByBatchRequest> | undefined): boolean {
+    return proto3.util.equals(CreateRecipesByBatchRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message rpc.ingredientRain.v1.CreateRecipesByBatchResponse
+ */
+export class CreateRecipesByBatchResponse extends Message<CreateRecipesByBatchResponse> {
+  /**
+   * @generated from field: optional string error = 1;
+   */
+  error?: string;
+
+  constructor(data?: PartialMessage<CreateRecipesByBatchResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "rpc.ingredientRain.v1.CreateRecipesByBatchResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "error", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateRecipesByBatchResponse {
+    return new CreateRecipesByBatchResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateRecipesByBatchResponse {
+    return new CreateRecipesByBatchResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateRecipesByBatchResponse {
+    return new CreateRecipesByBatchResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CreateRecipesByBatchResponse | PlainMessage<CreateRecipesByBatchResponse> | undefined, b: CreateRecipesByBatchResponse | PlainMessage<CreateRecipesByBatchResponse> | undefined): boolean {
+    return proto3.util.equals(CreateRecipesByBatchResponse, a, b);
   }
 }
 
@@ -869,9 +1011,9 @@ export class CreateRecipeResponse extends Message<CreateRecipeResponse> {
  */
 export class UpdateRecipeRequest extends Message<UpdateRecipeRequest> {
   /**
-   * @generated from field: rpc.ingredientRain.v1.Recipe Recipe = 1;
+   * @generated from field: rpc.ingredientRain.v1.Recipe recipe = 1;
    */
-  Recipe?: Recipe;
+  recipe?: Recipe;
 
   constructor(data?: PartialMessage<UpdateRecipeRequest>) {
     super();
@@ -881,7 +1023,7 @@ export class UpdateRecipeRequest extends Message<UpdateRecipeRequest> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "rpc.ingredientRain.v1.UpdateRecipeRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "Recipe", kind: "message", T: Recipe },
+    { no: 1, name: "recipe", kind: "message", T: Recipe },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateRecipeRequest {
