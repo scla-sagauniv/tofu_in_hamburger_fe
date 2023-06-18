@@ -1,12 +1,17 @@
 'use client';
 import Header from '@/components/molecules/Header';
 import RecipeCard from '@/components/molecules/RecipeCard';
+import { useAppSelector } from '@/state/hooks/hooks';
+import { selectGetIngredients } from '@/state/slices/ingredientSlice';
 
 export default function Receive() {
+  const ingredients = useAppSelector(selectGetIngredients);
   const result: Array<JSX.Element> = [];
   for (let index = 0; index < 8; index++) {
     result.push(<RecipeCard />);
   }
+  console.log(ingredients);
+
   return (
     <>
       <div className='flex flex-col min-h-screen min-w-screen md:justify-center items-center px-10 justify-start'>
