@@ -29,9 +29,11 @@ export default function Confirmation() {
   const get = async () => {
     const stream = client.streamIngredient({});
     for await (const el of stream) {
+      console.log('stream');
       setRes(el.ingredients);
     }
   };
+  get();
   // grpcからserver streamingの値を得る
   const startServerStreaming = async () => {
     await get();
@@ -41,8 +43,6 @@ export default function Confirmation() {
 
     dispatch(appActions.updateIngredients(ingredientsFromEveryone));
   };
-
-  startServerStreaming();
 
   function handleDeleteAnIngredient(uuid: string) {
     dispatch(appActions.deleteIngredientByUuid(uuid));
@@ -144,6 +144,7 @@ export default function Confirmation() {
             <br className='md:block hidden'></br>
             <GenericButton label='鍋を空にする' func={() => handleDeleteIngredients()} colour='#FEF4EF' />
             <br className='md:block hidden'></br>
+            <button onClick={() => get()}>FETCH</button>
           </div>
         </div>
       </div>
