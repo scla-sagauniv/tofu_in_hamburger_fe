@@ -52,7 +52,7 @@ export default function Ingredient(props: { ingredient: TypeOfIngredient; isSend
       <motion.a whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} onClick={() => (showDetail ? close() : open())}>
         {/* @ts-ignore */}
         <Card elevation={3} style={{ width: '80%', aspectRatio: '1/1', borderRadius: '50%', position: 'relative' }}>
-          <Image src={props.ingredient.image_url} alt='Picture of the author' layout='fill' objectFit='contain' />
+          <Image src={props.ingredient.imageUrl} alt='Picture of the author' layout='fill' objectFit='contain' />
           {!props.isSend ? (
             // @ts-ignore
             <IconButton

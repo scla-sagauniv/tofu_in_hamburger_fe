@@ -3,14 +3,32 @@ import Header from '@/components/molecules/Header';
 import RecipeCard from '@/components/molecules/RecipeCard';
 import { useAppSelector } from '@/state/hooks/hooks';
 import { selectGetIngredients } from '@/state/slices/ingredientSlice';
+import { useClient } from '@/hooks/Client';
+import { RecipeService } from '@/gen/ingredientRain_connect';
+import { TypeOfIngredient } from '@/models/TypeOfIngredient.model';
+import { TypeOfRecipe } from '@/models/TypeOfRecipe.model';
+import { useEffect, useState } from 'react';
+import { Recipe, SearchRecipesByIngredientsRequest } from '@/gen/ingredientRain_pb';
 
 export default function Receive() {
+  const clientForRecipe = useClient(RecipeService);
   const ingredients = useAppSelector(selectGetIngredients);
+  const [recipes, setRecipes] = useState<Array<Recipe>>([]);
   const result: Array<JSX.Element> = [];
-  for (let index = 0; index < 8; index++) {
-    result.push(<RecipeCard />);
+
+  for (const el of recipes) {
+    result.push(<RecipeCard recipe={el} />);
   }
-  console.log(ingredients);
+  useEffect(() => {
+    async (ingredients: Array<TypeOfIngredient>) => {
+      const res = await clientForRecipe.searchRecipesByIngredients(
+        new SearchRecipesByIngredientsRequest({
+          ingredients: ingredients,
+        }),
+      );
+      setRecipes(res.recipes);
+    };
+  }, []);
 
   return (
     <>

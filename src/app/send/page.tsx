@@ -8,18 +8,34 @@ import DisabledInputBox from '@/components/atoms/DisabledInputBox';
 import { TypeOfIngredient } from '@/models/TypeOfIngredient.model';
 import pic from '../../assets/chicken_png.png';
 import data from '@/data/mockData.json';
-
-// ***** mock data
-const ingredientsData: Array<TypeOfIngredient> = data.data;
+import { useClient } from '@/hooks/Client';
+import { IngredientService } from '@/gen/ingredientRain_connect';
+import { IngredientOnDb } from '@/gen/ingredientRain_pb';
+import { useState } from 'react';
 
 export default function Send() {
+  const [ingredientsData, setIngredientsData] = useState<Array<IngredientOnDb>>([]);
+  const client = useClient(IngredientService);
+  const handleDataFetch = async () => {
+    const res = await client.getIngredientList({});
+    setIngredientsData(res.ingredients);
+  };
+  handleDataFetch();
+
   // ***** demo
   const ingredients: Array<JSX.Element> = [];
 
   // delete when it's real ingredients data
   for (let index = 0; index < 9; index++) {
     for (const ingredient of ingredientsData) {
-      ingredients.push(<Ingredient ingredient={ingredient} isSend={true} />);
+      const e: TypeOfIngredient = {
+        uuid: undefined,
+        title: ingredient.titile,
+        description: ingredient.description,
+        imageUrl: ingredient.imageUrl,
+      };
+
+      ingredients.push(<Ingredient ingredient={e} isSend={true} />);
     }
   }
 
@@ -46,8 +62,8 @@ export default function Send() {
           <select onChange={(e) => handleAddIngredient(e)} className='md:hidden'>
             {ingredientsData.map((element, index) => {
               return (
-                <option key={index} value={element.title}>
-                  {element.title}
+                <option key={index} value={element.titile}>
+                  {element.titile}
                 </option>
               );
             })}

@@ -68,7 +68,7 @@ export default function Modal(props: {
         </div>
         <div className='w-full flex justify-center items-center py-10'>
           <div className='w-1/3 aspect-square relative'>
-            <Image src={props.ingredient.image_url} alt='Picture of the author' layout='fill' objectFit='contain' />
+            <Image src={props.ingredient.imageUrl} alt='Picture of the author' layout='fill' objectFit='contain' />
           </div>
           <div className='w-1/2'>{props.ingredient.description}</div>
         </div>

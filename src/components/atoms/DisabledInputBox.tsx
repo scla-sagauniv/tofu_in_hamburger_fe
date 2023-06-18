@@ -18,8 +18,6 @@ export default function InputBox() {
   const ingredientsData: Array<TypeOfIngredient> = useAppSelector(selectGetIngredients);
 
   const handleSendIngredientsAndPageSwitch = (path: string) => {
-    // グローバルに定義されたingredientsを利用してgrpcからserver streamingの値を得る
-    // のは，実際にリアルタイムで値が反映されている次ページの方がいいのか
     console.log(ingredientsData);
     router.push(path);
   };
@@ -64,8 +62,7 @@ export default function InputBox() {
                   }}
                   className='lg:inline-block hidden'
                 >
-                  <Image src={element.image_url} alt='Picture of the author' layout='fill' objectFit='contain' />
-                  {/* <Image src={ingredient.image_url} alt='Picture of the author' layout='fill' objectFit='contain' /> */}
+                  <Image src={element.imageUrl} alt='Picture of the author' layout='fill' objectFit='contain' />
                   {/* @ts-ignore */}
                   <IconButton
                     rounded
