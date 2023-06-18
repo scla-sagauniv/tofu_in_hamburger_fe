@@ -29,7 +29,7 @@ export default function Confirmation() {
   const get = async () => {
     const stream = client.streamIngredient({});
     for await (const el of stream) {
-      console.log('stream');
+      console.log('！！！！プッシュ通知ココまで来てるんだヨ！！！！');
       setRes(el.ingredients);
     }
   };
