@@ -6,8 +6,8 @@
 import {
   CreateIngredientRequest,
   CreateIngredientResponse,
-  CreateRecipeRequest,
-  CreateRecipeResponse,
+  CreateRecipesByBatchRequest,
+  CreateRecipesByBatchResponse,
   DeleteIngredientRequest,
   DeleteIngredientResponse,
   DeleteRecipeRequest,
@@ -16,6 +16,10 @@ import {
   GetIngredientListResponse,
   GetRecipeListRequest,
   GetRecipeListResponse,
+  SearchRecipesByIngredientResponse,
+  SearchRecipesByIngredientsRequest,
+  SendIngredientsRequst,
+  SendIngredientsResponse,
   StreamIngredientRequest,
   StreamIngredientResponse,
   UpdateIngredientRequest,
@@ -47,6 +51,15 @@ export const IngredientService = {
       name: 'GetIngredientList',
       I: GetIngredientListRequest,
       O: GetIngredientListResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc rpc.ingredientRain.v1.IngredientService.SendIngredients
+     */
+    sendIngredients: {
+      name: 'SendIngredients',
+      I: SendIngredientsRequst,
+      O: SendIngredientsResponse,
       kind: MethodKind.Unary,
     },
     /**
@@ -95,12 +108,21 @@ export const RecipeService = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc rpc.ingredientRain.v1.RecipeService.CreateRecipe
+     * @generated from rpc rpc.ingredientRain.v1.RecipeService.SearchRecipesByIngredients
      */
-    createRecipe: {
-      name: 'CreateRecipe',
-      I: CreateRecipeRequest,
-      O: CreateRecipeResponse,
+    searchRecipesByIngredients: {
+      name: 'SearchRecipesByIngredients',
+      I: SearchRecipesByIngredientsRequest,
+      O: SearchRecipesByIngredientResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc rpc.ingredientRain.v1.RecipeService.CreateRecipesByBatch
+     */
+    createRecipesByBatch: {
+      name: 'CreateRecipesByBatch',
+      I: CreateRecipesByBatchRequest,
+      O: CreateRecipesByBatchResponse,
       kind: MethodKind.Unary,
     },
     /**

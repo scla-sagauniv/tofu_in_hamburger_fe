@@ -1,4 +1,4 @@
-import { Card, CardContent, Badge, IconButton, Fab, Button } from 'ui-neumorphism';
+import { Card, IconButton, Fab, Button } from 'ui-neumorphism';
 import Image from 'next/image';
 
 import { TypeOfIngredient } from '@/models/TypeOfIngredient.model';
@@ -7,8 +7,13 @@ import { useRouter } from 'next/navigation';
 import { useAppSelector } from '@/state/hooks/hooks';
 import { appActions, selectGetIngredients } from '@/state/slices/ingredientSlice';
 import { useDispatch } from 'react-redux';
+import { useClient } from '@/hooks/Client';
+import { IngredientService } from '@/gen/ingredientRain_connect';
+import { SendIngredientsRequst } from '@/gen/ingredientRain_pb';
 
 export default function InputBox() {
+  const client = useClient(IngredientService);
+
   const router = useRouter();
 
   const dispatch = useDispatch();
@@ -17,10 +22,13 @@ export default function InputBox() {
   // ***** mock data
   const ingredientsData: Array<TypeOfIngredient> = useAppSelector(selectGetIngredients);
 
-  const handleSendIngredientsAndPageSwitch = (path: string) => {
-    // グローバルに定義されたingredientsを利用してgrpcからserver streamingの値を得る
-    // のは，実際にリアルタイムで値が反映されている次ページの方がいいのか
-    console.log(ingredientsData);
+  const handleSendIngredientsAndPageSwitch = async (path: string) => {
+    // グローハルに定義されたingredientsの値をgrpc serverへ送信する
+    await client.sendIngredients(
+      new SendIngredientsRequst({
+        ingredients: ingredientsData,
+      }),
+    );
     router.push(path);
   };
 
@@ -64,8 +72,7 @@ export default function InputBox() {
                   }}
                   className='lg:inline-block hidden'
                 >
-                  <Image src={element.image_url} alt='Picture of the author' layout='fill' objectFit='contain' />
-                  {/* <Image src={ingredient.image_url} alt='Picture of the author' layout='fill' objectFit='contain' /> */}
+                  <Image src={element.imageUrl} alt='Picture of the author' layout='fill' objectFit='contain' />
                   {/* @ts-ignore */}
                   <IconButton
                     rounded

@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Ingredient from '@/components/atoms/Ingredient';
 import { useClient } from '@/hooks/Client';
-import { IngredientService } from '@/gen/ingredientRain_connect';
+import { IngredientService, RecipeService } from '@/gen/ingredientRain_connect';
 import { Ingredient as IngredientType } from '../../gen/ingredientRain_pb';
 import { motion } from 'framer-motion';
 import { Card, IconButton, Divider } from 'ui-neumorphism';
@@ -20,8 +20,8 @@ export default function Confirmation() {
   const router = useRouter();
   const client = useClient(IngredientService);
   const dispatch = useDispatch();
-
   const ingredients = useAppSelector(selectGetIngredients);
+
   const [addedIngredients, setAddedIngredients] = useState<Array<TypeOfIngredient>>([]);
   const [dom, setDom] = useState<Array<JSX.Element>>([]);
 
@@ -33,15 +33,24 @@ export default function Confirmation() {
     }
   };
 
+  useEffect(() => {
+    // grpcからserver streamingの値を得る
+    async () => {
+      await get();
+      console.log('stream is fetched. Response is here: ', res);
+    };
+    // globalにstore
+    const ingredientsFromEveryone: Array<TypeOfIngredient> = res;
+
+    dispatch(appActions.updateIngredients(ingredientsFromEveryone));
+  }, []);
+
   function handleDeleteAnIngredient(uuid: string) {
-    //　グローバルから消去
     dispatch(appActions.deleteIngredientByUuid(uuid));
-    // propsからも消去
     setAddedIngredients((prevIngredients) => prevIngredients.filter((ingredient) => ingredient.uuid !== uuid));
     console.log('An ingredient', uuid, 'is deleted. Now you have', ingredients);
   }
 
-  dispatch(appActions.updateIngredients(ingredients));
   useEffect(() => {
     const removeElement = (index: number, element: TypeOfIngredient) => {
       setDom((prevDom) => {
@@ -85,21 +94,8 @@ export default function Confirmation() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   // grpcサーバからserver streamingのデータを取得してくる
-  //   async () => {
-  //     await get();
-  //     console.log('stream is fetched. Response is here: ', res);
-  //   };
-  //   // (グローバルにそれを保存)＋画面から出たら削除する
-  //   const ingredientsOfEveryone: Array<TypeOfIngredient> = [] as Array<TypeOfIngredient>;
-  //   // 👇本当はingredientsOfEveryoneを入れる
-  // }, []);
-
   async function handleGetRecipes(ingredients: Array<TypeOfIngredient>) {
-    console.log('the ingredients are sent!');
-    // recipe api fetch await
-
+    console.log('the ingredients are sent to API server!');
     // 自動的にreceive pageに遷移する
     router.push('/receive');
   }
@@ -115,6 +111,7 @@ export default function Confirmation() {
       <div className='overflow-hidden flex flex-col  min-h-screen min-w-screen md:justify-center items-center px-10 justify-start'>
         <Header title='' isSend={true} />
         <div className='w-full h-full flex md:flex-row flex-col grow md:items-end justify-center items-center md:px-10 relative'>
+          {/* アイコン降ってくる部分 */}
           <div className='absolute top-0 w-full md:grid lg:grid-cols-6 lg:gap-10 md:grid-cols-4 md:gap-5 hidden'>
             {dom}
           </div>
