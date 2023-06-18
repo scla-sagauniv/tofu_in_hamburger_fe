@@ -24,17 +24,14 @@ export default function Send() {
   const ingredients: Array<JSX.Element> = [];
 
   // delete when it's real ingredients data
-  for (let index = 0; index < 9; index++) {
-    for (const ingredient of ingredientsData) {
-      const e: TypeOfIngredient = {
-        uuid: undefined,
-        title: ingredient.titile,
-        description: ingredient.description,
-        imageUrl: ingredient.imageUrl,
-      };
-
-      ingredients.push(<Ingredient ingredient={e} isSend={true} />);
-    }
+  for (const ingredient of ingredientsData) {
+    const e: TypeOfIngredient = {
+      uuid: undefined,
+      title: ingredient.titile,
+      description: ingredient.description,
+      imageUrl: ingredient.imageUrl,
+    };
+    ingredients.push(<Ingredient ingredient={e} isSend={true} />);
   }
 
   // グローバルに値を追加する
@@ -49,7 +46,7 @@ export default function Send() {
   return (
     <>
       <div className='flex flex-col min-h-screen min-w-screen md:justify-center items-center px-10 justify-start'>
-        <Header title='材料を選んでください' isSend={true} />
+        <Header title='材料を選んでください' isSend={true} isReceive={false} />
         <div className='w-full h-full flex flex-col justify-center items-center px-10'>
           {/* The following component is not visible on mobile. */}
           <div className='w-full h-full md:grid lg:grid-cols-6 lg:gap-10 md:grid-cols-4 md:gap-5 hidden'>

@@ -7,7 +7,7 @@ export default function Switcher(props: { isSend: boolean }) {
           送信側
         </Link>
         |
-        <Link href='/receive' className={!props.isSend ? 'text-primary' : 'text-neutral hover:text-primary'}>
+        <Link href='/confirmation' className={!props.isSend ? 'text-primary' : 'text-neutral hover:text-primary'}>
           受信側
         </Link>
       </p>
