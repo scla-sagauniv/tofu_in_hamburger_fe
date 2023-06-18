@@ -32,18 +32,17 @@ export default function Confirmation() {
       setRes(el.ingredients);
     }
   };
-
-  useEffect(() => {
-    // grpcからserver streamingの値を得る
-    async () => {
-      await get();
-      console.log('stream is fetched. Response is here: ', res);
-    };
+  // grpcからserver streamingの値を得る
+  const startServerStreaming = async () => {
+    await get();
+    console.log('stream is fetched. Response is here: ', res);
     // globalにstore
     const ingredientsFromEveryone: Array<TypeOfIngredient> = res;
 
     dispatch(appActions.updateIngredients(ingredientsFromEveryone));
-  }, []);
+  };
+
+  startServerStreaming();
 
   function handleDeleteAnIngredient(uuid: string) {
     dispatch(appActions.deleteIngredientByUuid(uuid));
