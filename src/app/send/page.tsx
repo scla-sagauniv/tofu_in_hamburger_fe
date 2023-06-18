@@ -6,8 +6,6 @@ import Header from '@/components/molecules/Header';
 import InputBox from '@/components/atoms/InputBox';
 import DisabledInputBox from '@/components/atoms/DisabledInputBox';
 import { TypeOfIngredient } from '@/models/TypeOfIngredient.model';
-import pic from '../../assets/chicken_png.png';
-import data from '@/data/mockData.json';
 import { useClient } from '@/hooks/Client';
 import { IngredientService } from '@/gen/ingredientRain_connect';
 import { IngredientOnDb } from '@/gen/ingredientRain_pb';
