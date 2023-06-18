@@ -109,7 +109,7 @@ export default function Confirmation() {
   return (
     <>
       <div className='overflow-hidden flex flex-col  min-h-screen min-w-screen md:justify-center items-center px-10 justify-start'>
-        <Header title='' isSend={true} />
+        <Header title='' isSend={false} isReceive={false} />
         <div className='w-full h-full flex md:flex-row flex-col grow md:items-end justify-center items-center md:px-10 relative'>
           {/* アイコン降ってくる部分 */}
           <div className='absolute top-0 w-full md:grid lg:grid-cols-6 lg:gap-10 md:grid-cols-4 md:gap-5 hidden'>
