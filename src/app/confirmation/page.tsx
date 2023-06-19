@@ -20,7 +20,8 @@ export default function Confirmation() {
   const router = useRouter();
   const client = useClient(IngredientService);
   const dispatch = useDispatch();
-  const ingredients = useAppSelector(selectGetIngredients);
+  const gIngredients = useAppSelector(selectGetIngredients);
+  const [ingredients, setIngredients] = useState(gIngredients);
 
   const [addedIngredients, setAddedIngredients] = useState<Array<TypeOfIngredient>>([]);
   const [dom, setDom] = useState<Array<JSX.Element>>([]);
@@ -30,10 +31,14 @@ export default function Confirmation() {
     const stream = client.streamIngredient({});
     for await (const el of stream) {
       console.log('！！！！プッシュ通知ココまで来てるんだヨ！！！！');
+      console.log(el.ingredients);
+
       setRes(el.ingredients);
+      setIngredients(el.ingredients);
+      rainIngredients(el.ingredients);
     }
   };
-  get();
+  // get();
   // grpcからserver streamingの値を得る
   const startServerStreaming = async () => {
     await get();
@@ -50,19 +55,22 @@ export default function Confirmation() {
     console.log('An ingredient', uuid, 'is deleted. Now you have', ingredients);
   }
 
-  useEffect(() => {
-    const removeElement = (index: number, element: TypeOfIngredient) => {
-      setDom((prevDom) => {
-        const updatedDom = [...prevDom];
-        const removed = updatedDom.splice(index, 1);
-        setAddedIngredients((prevAddedIngredients) => [...prevAddedIngredients, element]); // 更新後の値を使用して addedIngredients を更新
-        console.log(removed, 'Dom is deleted out of screen (but in store)!');
-        console.log('Now', addedIngredients, 'are in the sending list');
-        return updatedDom;
-      });
-    };
+  const removeElement = (index: number, element: TypeOfIngredient) => {
+    setDom((prevDom) => {
+      const updatedDom = [...prevDom];
+      const removed = updatedDom.splice(index, 1);
+      setAddedIngredients((prevAddedIngredients) => [...prevAddedIngredients, element]); // 更新後の値を使用して addedIngredients を更新
+      console.log(removed, 'Dom is deleted out of screen (but in store)!');
+      console.log('Now', addedIngredients, 'are in the sending list');
+      return updatedDom;
+    });
+  };
 
-    for (const [index, element] of Object.entries(ingredients)) {
+  const rainIngredients = (ingredients: IngredientType[]) => {
+    console.log('rain', ingredients);
+    const afterDoms = dom;
+    ingredients.map((element, index) => {
+      // for (const [index, element] of Object.entries(ingredients)) {
       let durationTime = Number((Math.random() * 10) % 7);
 
       const motionDiv = (
@@ -80,18 +88,23 @@ export default function Confirmation() {
           <Ingredient ingredient={element} isSend={false} />
         </motion.div>
       );
+      afterDoms.push(motionDiv);
 
       setTimeout(() => {
         removeElement(Number(index), element);
       }, 10 * 1000);
+      // }
+    });
+    console.log('afterDoms', afterDoms);
 
-      setDom((prevDom) => {
-        const newDom = [...prevDom, motionDiv];
-        console.log(newDom);
-        return newDom;
-      });
-    }
-  }, []);
+    setDom([...afterDoms]);
+  };
+  useEffect(() => {
+    console.log('dom', dom);
+  }, [dom]);
+  // useEffect(() => {
+  //   rainIngredients();
+  // });
 
   async function handleGetRecipes(ingredients: Array<TypeOfIngredient>) {
     console.log('the ingredients are sent to API server!');
