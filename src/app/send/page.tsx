@@ -9,16 +9,23 @@ import { TypeOfIngredient } from '@/models/TypeOfIngredient.model';
 import { useClient } from '@/hooks/Client';
 import { IngredientService } from '@/gen/ingredientRain_connect';
 import { IngredientOnDb } from '@/gen/ingredientRain_pb';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Send() {
   const [ingredientsData, setIngredientsData] = useState<Array<IngredientOnDb>>([]);
   const client = useClient(IngredientService);
   const handleDataFetch = async () => {
     const res = await client.getIngredientList({});
-    setIngredientsData(res.ingredients);
+    return res.ingredients;
   };
-  handleDataFetch();
+
+  useEffect(() => {
+    handleDataFetch().then((ingredients) => {
+      if (ingredientsData.length === 0) {
+        setIngredientsData(ingredients);
+      }
+    });
+  });
 
   // ***** demo
   const ingredients: Array<JSX.Element> = [];
