@@ -29,7 +29,8 @@ export default function InputBox() {
         ingredients: ingredientsData,
       }),
     );
-    router.push(path);
+    dispatch(appActions.updateIngredients([]));
+    // router.push(path);
   };
 
   function handleDeleteIngredients(uuid: string) {
