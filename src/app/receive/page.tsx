@@ -20,14 +20,17 @@ export default function Receive() {
     result.push(<RecipeCard recipe={el} />);
   }
   useEffect(() => {
-    async (ingredients: Array<TypeOfIngredient>) => {
+    (async (ingredients: Array<TypeOfIngredient>) => {
+      console.log('ingredients::', ingredients);
+
       const res = await clientForRecipe.searchRecipesByIngredients(
         new SearchRecipesByIngredientsRequest({
           ingredients: ingredients,
         }),
       );
       setRecipes(res.recipes);
-    };
+      console.log('recipes:', res);
+    })(ingredients);
   }, []);
 
   return (
