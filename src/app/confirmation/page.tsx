@@ -56,15 +56,19 @@ export default function Confirmation() {
   }
 
   const removeElement = (index: number, element: TypeOfIngredient) => {
-    setDom((prevDom) => {
-      const updatedDom = [...prevDom];
-      const removed = updatedDom.splice(index, 1);
-      setAddedIngredients((prevAddedIngredients) => [...prevAddedIngredients, element]); // 更新後の値を使用して addedIngredients を更新
-      console.log(removed, 'Dom is deleted out of screen (but in store)!');
-      console.log('Now', addedIngredients, 'are in the sending list');
-      return updatedDom;
-    });
+    const updatedDom = [...dom];
+    const removed = updatedDom.splice(index, 1);
+    console.log(removed, 'Dom is deleted out of screen (but in store)!');
+    setDom(updatedDom);
+    console.log(element);
+    setAddedIngredients((prevAddedIngredients) => [...prevAddedIngredients, element]); // 更新後の値を使用して addedIngredients を更新
+    // console.log('Now', addedIngredients, 'are in the sending list');
+    // dispatch(appActions.updateIngredients(addedIngredients));
   };
+  useEffect(() => {
+    console.log('Now', addedIngredients, 'are in the sending list');
+    dispatch(appActions.updateIngredients(addedIngredients));
+  });
 
   const rainIngredients = (ingredients: IngredientType[]) => {
     console.log('rain', ingredients);
@@ -91,7 +95,12 @@ export default function Confirmation() {
       afterDoms.push(motionDiv);
 
       setTimeout(() => {
-        removeElement(Number(index), element);
+        removeElement(Number(index), {
+          uuid: element.uuid,
+          title: element.title,
+          description: element.description,
+          imageUrl: element.imageUrl,
+        });
       }, 10 * 1000);
       // }
     });
