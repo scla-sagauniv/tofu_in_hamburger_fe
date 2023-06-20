@@ -21,32 +21,37 @@ export default function Confirmation() {
   const client = useClient(IngredientService);
   const dispatch = useDispatch();
   const gIngredients = useAppSelector(selectGetIngredients);
-  const [ingredients, setIngredients] = useState(gIngredients);
-
-  const [addedIngredients, setAddedIngredients] = useState<Array<TypeOfIngredient>>([]);
+  const [ingredients, setIngredients] = useState(gIngredients); 
+  const [addedIngredients, setAddedIngredients] = useState<Array<TypeOfIngredient>>([]); // 画面上から消えてゆくingredientsのaccumulation
   const [dom, setDom] = useState<Array<JSX.Element>>([]);
 
   const [res, setRes] = useState<Array<IngredientType>>([]);
+// こうすることで自動的にstreamingは監視するのか？
   const get = async () => {
     const stream = client.streamIngredient({});
     for await (const el of stream) {
       console.log('！！！！プッシュ通知ココまで来てるんだヨ！！！！');
-      console.log(el.ingredients);
+      console.log('data: ', el.ingredients);
 
+      // set Response, reflect it to the global
       setRes(el.ingredients);
+
+      // set current ingredients payload
       setIngredients(el.ingredients);
+
+      // put rain drops on with current ingredients payload
       rainIngredients(el.ingredients);
     }
   };
-  // get();
+
   // grpcからserver streamingの値を得る
   const startServerStreaming = async () => {
     await get();
     console.log('stream is fetched. Response is here: ', res);
     // globalにstore
     const ingredientsFromEveryone: Array<TypeOfIngredient> = res;
-
-    dispatch(appActions.updateIngredients(ingredientsFromEveryone));
+    // previous ingredients + incoming ingredients = new global ingredients
+    dispatch(appActions.updateIngredients(ingredients.concat(ingredientsFromEveryone)));
   };
 
   function handleDeleteAnIngredient(uuid: string) {
@@ -56,25 +61,20 @@ export default function Confirmation() {
   }
 
   const removeElement = (index: number, element: TypeOfIngredient) => {
-    const updatedDom = [...dom];
-    const removed = updatedDom.splice(index, 1);
-    console.log(removed, 'Dom is deleted out of screen (but in store)!');
-    setDom(updatedDom);
-    console.log(element);
-    setAddedIngredients((prevAddedIngredients) => [...prevAddedIngredients, element]); // 更新後の値を使用して addedIngredients を更新
-    // console.log('Now', addedIngredients, 'are in the sending list');
-    // dispatch(appActions.updateIngredients(addedIngredients));
+    setDom((prevDom) => {
+      const updatedDom = [...prevDom];
+      const removed = updatedDom.splice(index, 1);
+      setAddedIngredients((prevAddedIngredients) => [...prevAddedIngredients, element]); // 更新後の値を使用して addedIngredients を更新
+      console.log(removed, 'Dom is deleted out of screen (but in store)!');
+      console.log('Now', addedIngredients, 'are in the sending list');
+      return updatedDom;
+    });
   };
-  useEffect(() => {
-    console.log('Now', addedIngredients, 'are in the sending list');
-    dispatch(appActions.updateIngredients(addedIngredients));
-  });
 
-  const rainIngredients = (ingredients: IngredientType[]) => {
-    console.log('rain', ingredients);
-    const afterDoms = dom;
-    ingredients.map((element, index) => {
-      // for (const [index, element] of Object.entries(ingredients)) {
+  const rainIngredients = (incomingIngredients: IngredientType[]) => {
+    console.log('rain', incomingIngredients);
+    // const afterDoms = dom;
+    incomingIngredients.map((element, index) => {
       let durationTime = Number((Math.random() * 10) % 7);
 
       const motionDiv = (
@@ -92,28 +92,29 @@ export default function Confirmation() {
           <Ingredient ingredient={element} isSend={false} />
         </motion.div>
       );
-      afterDoms.push(motionDiv);
+      // afterDomsに更新がかかっていない状態で次の要素をpushするので正しいデータがafterDomsに保持されない?
+      // afterDoms.push(motionDiv);
+      
+      // 更新後の値を利用してmotionDivを追加
+      setDom((prevDoms) => [...prevDoms, motionDiv]);
 
       setTimeout(() => {
-        removeElement(Number(index), {
-          uuid: element.uuid,
-          title: element.title,
-          description: element.description,
-          imageUrl: element.imageUrl,
-        });
+        removeElement(Number(index), element);
       }, 10 * 1000);
-      // }
     });
-    console.log('afterDoms', afterDoms);
-
-    setDom([...afterDoms]);
+    // 送信された要素全部
+    // console.log('afterDoms', afterDoms);
+    console.log('Elements sent:', dom);
   };
+
   useEffect(() => {
     console.log('dom', dom);
-  }, [dom]);
-  // useEffect(() => {
-  //   rainIngredients();
-  // });
+    console.log('gIngredients', gIngredients);
+  }, [dom, gIngredients]);
+
+  useEffect(() => {
+    startServerStreaming()
+  }, []);
 
   async function handleGetRecipes(ingredients: Array<TypeOfIngredient>) {
     console.log('the ingredients are sent to API server!');
@@ -166,7 +167,6 @@ export default function Confirmation() {
             <br className='md:block hidden'></br>
             <GenericButton label='鍋を空にする' func={() => handleDeleteIngredients()} colour='#FEF4EF' />
             <br className='md:block hidden'></br>
-            <button onClick={() => get()}>FETCH</button>
           </div>
         </div>
       </div>
